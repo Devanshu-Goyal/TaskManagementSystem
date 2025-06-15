@@ -1,15 +1,3 @@
-Here’s a clear and polished **README.md** you can put in your repository’s root directory.
-It covers:
-
-✅ Project description
-✅ Features
-✅ Tech stack
-✅ Installation
-✅ Run instructions
-✅ Docker instructions
-✅ Deployment notes
-
----
 
 ````markdown
 # 📁 Task Management System
