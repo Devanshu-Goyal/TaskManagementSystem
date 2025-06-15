@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Your Tasks</h1>
+
+<form action="{{ url_for('main.add') }}" method="POST" class="mb-4">
+    <input name="task" placeholder="Add a new task" required>
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<ul class="list-group mb-4">
+    {% for task in tasks %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <span{% if task.done %} style="text-decoration: line-through;"{% endif %}>
+                    {{ task.task }}
+                </span>
+                <br>
+                <small class="text-muted">
+                    Created at: {{ task.created_at }}
+                </small>
+                {% if task.done and task.done_at %}
+                    <br>
+                    <small class="text-muted">
+                        Completed at: {{ task.done_at }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div>
+                {% if not task.done %}
+                    <form action="{{ url_for('main.done', task_id=task["_id"]) }}" method="POST" style="display: inline">
+                        <button type="submit" class="btn btn-sm btn-warning">Mark Done</button>
+                    </form>
+                {% else %}
+                    <form action="{{ url_for('main.undo', task_id=task["_id"]) }}" method="POST" style="display: inline">
+                        <button type="submit" class="btn btn-sm btn-info">Undo</button>
+                    </form>
+                {% endif %}
+                
+                <form action="{{ url_for('main.delete', task_id=task["_id"]) }}" method="POST" style="display: inline">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+
+                <form action="{{ url_for('main.edit', task_id=task["_id"]) }}" method="POST" style="display: inline">
+                    <input name="new_task" placeholder="Edit task" required>
+                    <button type="submit" class="btn btn-sm btn-secondary">Save</button>
+                </form>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
